@@ -168,6 +168,34 @@ void stacker(void*) {
 
 }
 
+void autonOne(void*){
+	while(true){
+		if(master.get_digital(DIGITAL_RIGHT)){
+			angler.move(50);
+			delay(50);
+			angler.move(0);
+			while(true){
+				arm.set_zero_position(0);
+				arm.move(80);
+
+				while(!(arm.get_position() < 100 && arm.get_position() > 95)){
+					delay(20);
+				}
+
+				arm.move(0);
+				arm.move(-80);
+
+				while(!(arm.get_position() > -1 && arm.get_position() < 1)){
+					delay(20);
+				}
+
+				arm.move(0);
+
+			}
+		}
+	}
+}
+
 void opcontrol() {
 	Task task1 (drive, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Driving");
 	Task task2 (intake, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Intake");
@@ -175,4 +203,5 @@ void opcontrol() {
 	Task task4 (arms, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Arms");
 	Task task5 (towerScore, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Tower scoring");
 	Task task6 (stacker, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Cube stacking");
+	Task task7 (autonOne, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Autonomous one");
 }
