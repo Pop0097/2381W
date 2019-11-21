@@ -1,3 +1,4 @@
+/*
 #include "main.h"
 
 #include <math.h>
@@ -9,44 +10,39 @@
 #define MOTOR4 12 //R2
 
 #define MOTOR5 13 //Angler
-#define MOTOR6 4 //Arm
+#define MOTOR6 4 //Arm  -1.243
 #define MOTOR7 5 //LIntake
 #define MOTOR8 14 //RIntake
 
 using namespace pros;
 
-void expand() {
-	Motor arm(MOTOR6, 1);
-	Motor angler(MOTOR5, 1);
-	int armPosition = 0; //SET A VALUE
-	int anglerPosition = 0; //SET A VALUE
+Motor left_wheels_1(MOTOR1, 0); //L1
+Motor right_wheels_1(MOTOR3, 1); //R1
+Motor left_wheels_2(MOTOR2, 1); //L2
+Motor right_wheels_2(MOTOR4, 0); //R2
+Motor intake_left(MOTOR7, 0);
+Motor intake_right(MOTOR8, 1);
+Motor angler(MOTOR5, 1);
+Motor arm(MOTOR6, 1);
 
+void expand() {
+	arm.set_zero_position(0);
+
+	arm.move(50);
+	while(!(arm.get_position() > -10 && arm.get_position() < -8)){
+
+	}
 	//Moves motors to let robot expand. I DON'T WANT TO BREAK THE MOTORS SO WE HAVE TO CHANGE THE VALUES LATER
-	arm.move_absolute(armPosition, 50); //change values later
-	angler.move_absolute(anglerPosition, 50); //change values later
+
 
 	//Moves motors to original position
-	arm.move_absolute(armPosition, -50); //change values later
-	angler.move_absolute(anglerPosition, -50); //change values later
+
 
 	delay(20);
 }
 
 //Will be used to call functions which will run the robot
 void autonomous() {
-
-	//resetPosition(gPosition);
-  //pros::Task task1(trackPositionTask, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "TrackingPosition");
-
-  //Define motors
-  Motor left_wheels_1(MOTOR1, 0); //L1
-  Motor right_wheels_1(MOTOR3, 1); //R1
-  Motor left_wheels_2(MOTOR2, 1); //L2
-  Motor right_wheels_2(MOTOR4, 0); //R2
-  Motor intake_left(MOTOR7, 0);
-	Motor intake_right(MOTOR8, 1);
-	Motor angler(MOTOR5, 1);
-	Motor arm(MOTOR6, 1);
 
   expand();
 
@@ -127,10 +123,6 @@ void autonomous() {
   left_wheels_2.move(-20);
   right_wheels_1.move(-20);
   right_wheels_2.move(-20);
-<<<<<<< HEAD
-  pros::delay(1000); //idl change this value later
-  left_wheels_1.move(0);
-  left_wheels_2.move(0);
-  right_wheels_1.move(0);
-  right_wheels_2.move(0);
+
 }
+*/
