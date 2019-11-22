@@ -28,7 +28,7 @@ class PIDImpl
 };
 
 //This method is called below in the method "calc()"
-PID::PID( double dt, double max, double min, double Kp, double Kd, double Ki )
+PID::PID( double dt, double max, double min, double Kp, double Kd, double Ki)
 {
     pimpl = new PIDImpl(dt,max,min,Kp,Kd,Ki);//calls constructor
 }
