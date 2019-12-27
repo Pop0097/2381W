@@ -9,7 +9,7 @@
 
 #define MOTOR5 13 //Angler
 #define MOTOR6 4 //Arm
-#define MOTOR7 5 //LIntake
+#define MOTOR7 5 //LIntake9
 #define MOTOR8 14 //RIntake
 
 PID pid = PID(0.1, 75, -75, 10, 1, 0.5);//constructs PID object
@@ -19,15 +19,15 @@ pros::Controller master (CONTROLLER_MASTER);
 pros::Mutex mutex;
 
 //defines the ports that are associated with each wheel
-pros::Motor left_wheels_1 (MOTOR1, 0); //L1
-pros::Motor right_wheels_1 (MOTOR3, 1); //R1
+pros::Motor left_wheels_1 (MOTOR1, 1); //L1
+pros::Motor right_wheels_1 (MOTOR3, 0); //R1
 pros::Motor left_wheels_2 (MOTOR2, 1); //L2
 pros::Motor right_wheels_2 (MOTOR4, 0); //R2
 
-pros::Motor intake_left (MOTOR7, 0);
-pros::Motor intake_right (MOTOR8, 1);
+pros::Motor intake_left (MOTOR7, 1);
+pros::Motor intake_right (MOTOR8, 0);
 pros::Motor arm (MOTOR6, 1);
-pros::Motor angler (MOTOR5, 1);
+pros::Motor angler (MOTOR5, 0);
 
 void autonomousOne();
 void autonomousTwo();
@@ -72,8 +72,8 @@ void intake(void*) {
 				}
 		}
 		else {
-			intake_left.move(0);
-			intake_right.move(0);
+			intake_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			intake_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
 		pros::delay(20);
 	}
@@ -92,7 +92,7 @@ void arms(void*) {
 			arm.move(-arm_power);
 		}
 		else {
-			arm.move(0);
+			arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
 		pros::delay(20);
 	}
@@ -110,7 +110,7 @@ void anglerMove(void*) {
 				angler.move(-angler_power);
 			}
 			else {
-				angler.move(0);
+				angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 			}
 			pros::delay(20);
 		}
