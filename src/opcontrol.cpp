@@ -2,15 +2,15 @@
 #include "pid.h"
 
 //defines the ports for each motor
-#define MOTOR1 2 //L1
-#define MOTOR2 3 //L2
+#define MOTOR1 14 //L1
+#define MOTOR2 17 //L2
 #define MOTOR3 11 //R1
-#define MOTOR4 12 //R2
+#define MOTOR4 2 //R2
 
 #define MOTOR5 13 //Angler
 #define MOTOR6 4 //Arm
 #define MOTOR7 5 //LIntake9
-#define MOTOR8 14 //RIntake
+#define MOTOR8 18 //RIntake
 
 PID pid = PID(0.1, 75, -75, 10, 1, 0.5);//constructs PID object
 //PID pid_auton = PID(0.1, 75, -75, 10, 1, 0.5);
@@ -126,27 +126,7 @@ void arms(void*) {
 
 void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 	while(true){
-		if(master.get_digital(DIGITAL_UP)){ //tallest tower
-			pros::lcd::set_text(1, "Tallest tower");
-			int encoderValue1 = 100; //TEMPORARY VALUE
-			mutex.take(TIMEOUT_MAX);
-			while(!((master.get_digital(DIGITAL_R1)) || (master.get_digital(DIGITAL_R2)))){
-				if(arm.get_position() > encoderValue1){
-					arm.move(-50);
-				}
-				else{
-					arm.move(50);
-				}
-				if(!((arm.get_position() < 105) && (arm.get_position() > 95))){ //TEMPORARY VALUES
-					pros::delay(20);
-				}
-				else{
-					arm.move(0);
-				}
-			}
-			mutex.give();
-		}
-		else if(master.get_digital(DIGITAL_RIGHT)){ //medium tower
+		if(master.get_digital(DIGITAL_RIGHT)){ //medium tower
 			pros::lcd::set_text(1, "Medium tower");
 			int encoderValue2 = 70;//TEMPORARY VALUE
 			mutex.take(TIMEOUT_MAX);
