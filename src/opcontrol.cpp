@@ -34,7 +34,10 @@ void drive(void*) {
 //loop reads the joystick controlls and powers the motors accordingly
 	while (true) {
 		int power = master.get_analog(ANALOG_LEFT_Y);
-		int turn = master.get_analog(ANALOG_LEFT_X);
+		int turn = 0;
+		if(!(master.get_digital(DIGITAL_UP))){
+			turn = master.get_analog(ANALOG_RIGHT_X);
+		}
 		int left = power + turn;
 		int right = power - turn;
 		left_wheels_1.move(left);
@@ -75,34 +78,34 @@ void intake(void*) {
 }
 
 void anglerMove(void*) {
-
+	int angler_power = 0;
 	while(true){
-		int power = master.get_analog(ANALOG_RIGHT_Y);
-		if(power!= 0){
-			angler.move(power);
+		if(master.get_digital(DIGITAL_Y)){
+			angler.move(100);
+		}
+		else if(master.get_digital(DIGITAL_A)){
+			angler.move(-100);
+		}
+		else if(master.get_digital(DIGITAL_UP)){ //overrides so you can use the right joystick for angler
+			pros::lcd::clear_line(1);
+			pros::lcd::set_text(1, "Angler Given Control");
+			while(master.get_digital(DIGITAL_UP)){
+				angler_power = master.get_analog(ANALOG_RIGHT_Y);
+				angler.move(angler_power);
+				pros::delay(20);
+			}
+			pros::lcd::clear_line(1);
 		}
 		else{
 			angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
+
+
+
 		pros::delay(20);
 	}
 
-	/*
-	while(true) {
-			int angler_power = pid.calculate(3, angler.get_position());
-				//moves angler
-			if(master.get_digital(DIGITAL_R1)) {
-				angler.move(angler_power);
-			}
-			else if(master.get_digital(DIGITAL_L1)) {
-				angler.move(-angler_power);
-			}
-			else {
-				angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			}
-			pros::delay(20);
-		}
-*/
+
 }
 
 void arms(void*) {
@@ -127,6 +130,7 @@ void arms(void*) {
 void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 	while(true){
 		if(master.get_digital(DIGITAL_RIGHT)){ //medium tower
+			pros::lcd::clear_line(1);
 			pros::lcd::set_text(1, "Medium tower");
 			int encoderValue2 = 70;//TEMPORARY VALUE
 			mutex.take(TIMEOUT_MAX);
@@ -144,9 +148,11 @@ void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 					arm.move(0);
 				}
 			}
+			pros::lcd::clear_line(1);
 			mutex.give();
 		}
 		else if(master.get_digital(DIGITAL_LEFT)){ //shortest tower
+			pros::lcd::clear_line(1);
 			pros::lcd::set_text(1, "Shortest tower");
 			int encoderValue3 = 50;
 			mutex.take(TIMEOUT_MAX);//TEMPORARY VALUE
@@ -164,6 +170,7 @@ void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 					arm.move(0);
 				}
 			}
+			pros::lcd::clear_line(1);
 			mutex.give();
 		}
 		pros::delay(20);
