@@ -70,6 +70,8 @@ void intake(void*) {
 		}
 		else {
 			//ensures the intakes do not move
+			intake_left.move(0);
+			intake_right.move(0);
 			intake_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 			intake_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
@@ -97,15 +99,11 @@ void anglerMove(void*) {
 			pros::lcd::clear_line(1);
 		}
 		else{
+			angler.move(0);
 			angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
-
-
-
 		pros::delay(20);
 	}
-
-
 }
 
 void arms(void*) {
@@ -121,6 +119,7 @@ void arms(void*) {
 			arm.move(-arm_power);
 		}
 		else {
+			arm.move(0);
 			arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
 		pros::delay(20);
@@ -146,6 +145,7 @@ void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 				}
 				else{
 					arm.move(0);
+					arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 				}
 			}
 			pros::lcd::clear_line(1);
@@ -168,6 +168,7 @@ void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 				}
 				else{
 					arm.move(0);
+					arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 				}
 			}
 			pros::lcd::clear_line(1);
