@@ -53,11 +53,11 @@ void intake(void*) {
 	int intake_power = 100;
 	//moves intakes
 	while(true) {
-		if(master.get_digital(DIGITAL_R2)) {
+		if(master.get_digital(DIGITAL_L2)) {
 			intake_left.move(intake_power);
 			intake_right.move(intake_power);
 		}
-		else if(master.get_digital(DIGITAL_L2)) {
+		else if(master.get_digital(DIGITAL_R2)) {
 			intake_left.move(-intake_power);
 			intake_right.move(-intake_power);
 		}
@@ -80,10 +80,10 @@ void intake(void*) {
 void anglerMove(void*) {
 	int angler_power = 0;
 	while(true){
-		if(master.get_digital(DIGITAL_Y)){
+		if(master.get_digital(DIGITAL_L1)){
 			angler.move(100);
 		}
-		else if(master.get_digital(DIGITAL_A)){
+		else if(master.get_digital(DIGITAL_R1)){
 			angler.move(-100);
 		}
 		else if(master.get_digital(DIGITAL_UP)){ //overrides so you can use the right joystick for angler
@@ -114,10 +114,10 @@ void arms(void*) {
 
 	while(true) {
 		//moves arm
-		if(master.get_digital(DIGITAL_R1)) {
+		if(master.get_digital(DIGITAL_X)) {
 			arm.move(arm_power);
 		}
-		else if(master.get_digital(DIGITAL_L1)) {
+		else if(master.get_digital(DIGITAL_Y)) {
 			arm.move(-arm_power);
 		}
 		else {
@@ -134,7 +134,7 @@ void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 			pros::lcd::set_text(1, "Medium tower");
 			int encoderValue2 = 70;//TEMPORARY VALUE
 			mutex.take(TIMEOUT_MAX);
-			while(!((master.get_digital(DIGITAL_R1)) || (master.get_digital(DIGITAL_R2)))){
+			while(!((master.get_digital(DIGITAL_X)) || (master.get_digital(DIGITAL_Y)))){
 				if(arm.get_position() > encoderValue2){
 					arm.move(-50);
 				}
@@ -156,7 +156,7 @@ void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
 			pros::lcd::set_text(1, "Shortest tower");
 			int encoderValue3 = 50;
 			mutex.take(TIMEOUT_MAX);//TEMPORARY VALUE
-			while(!((master.get_digital(DIGITAL_R1)) || (master.get_digital(DIGITAL_R2)))){
+			while(!((master.get_digital(DIGITAL_X)) || (master.get_digital(DIGITAL_Y)))){
 				if(arm.get_position() > encoderValue3){
 					arm.move(-50);
 				}
