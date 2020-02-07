@@ -1,201 +1,193 @@
 #include "main.h"
 #include <math.h>
 #include "motors.h"
+#include "adi.h"
+#include "pid.h"
 
-void autonomous() {
+using namespace pros;
 
-		left_wheels_1.tare_position();
-	  left_wheels_2.tare_position();
-	  right_wheels_1.tare_position();
-	  right_wheels_2.tare_position();
+PID pid2 = PID(0.1, 75, -75, 0.1, 0.01, 0.5);//constructs PID object
+// void ultrasonic(void*) {
 
-	  left_wheels_1.move_absolute(100, 100);
-	  left_wheels_2.move_absolute(100, 100);
-	  right_wheels_1.move_absolute(100, 100);
-	  right_wheels_2.move_absolute(100, 100);
-	  while (!((left_wheels_1.get_position() < 105) && (left_wheels_1.get_position() > 95))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
+// 	while (true) {
+// 		while (ultra_left.get_value() > 100 && ultra_right.get_value() > 100) {
+//     // Move forward until the robot is 100 cm from a solid object
+// 		angler.move(127);
+//     pros::delay(50);
+//   }
+// }
+//
+// }
+
+void movement() {
+
+			left_wheels_1.tare_position();
+		  left_wheels_2.tare_position();
+		  right_wheels_1.tare_position();
+		  right_wheels_2.tare_position();
+
+	  intake_left.move(-100);
+	  intake_right.move(-100);
+		delay(100);
+
+	  left_wheels_1.move_absolute(-3350, 50);
+	  left_wheels_2.move_absolute(-3350, 50);
+	  right_wheels_1.move_absolute(-3350, 50);
+	  right_wheels_2.move_absolute(-3350, 50);
+
+	  while (!((left_wheels_1.get_position() < -3345) && (left_wheels_1.get_position() > -3455))) {
+	   delay(20);
 	  }
+		while (!((left_wheels_2.get_position() < -3345) && (left_wheels_2.get_position() > -3455))) {
+		delay(20);
+	 }
+	 while (!((right_wheels_1.get_position() < -3345) && (right_wheels_1.get_position() > -3455))) {
+		delay(20);
+	 }
+	 while (!((right_wheels_2.get_position() < -3345) && (right_wheels_2.get_position() > -3455))) {
+		delay(20);
+	 }
 
 	  left_wheels_1.move(0);
 	  left_wheels_2.move(0);
 	  right_wheels_1.move(0);
 	  right_wheels_2.move(0);
+		intake_left.move(0);
+		intake_right.move(0);
+		delay(100);
+		std::string d1 = std::to_string(left_wheels_1.get_position());
+		lcd::set_text(0, d1);
+		std::string d2 = std::to_string(right_wheels_1.get_position());
+		lcd::set_text(1, d2);
+		std::string d3 = std::to_string(left_wheels_2.get_position());
+		lcd::set_text(2, d3);
+		std::string d4 = std::to_string(right_wheels_2.get_position());
+		lcd::set_text(3, d4);
 
-		arm.tare_position();
-	  arm.move_absolute(400, 100);
-		while (!((arm.get_position() < 405) && (arm.get_position() > 395))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
-	  }
-		angler.tare_position();
-		angler.move_absolute(-50, -100);
-		while (!((angler.get_position() < -45) && (angler.get_position() > -55))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
-	  }
-		arm.move_absolute(0, -70);
-		while (!((arm.get_position() < 5) && (arm.get_position() > -5))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
-	  }
-		angler.move_absolute(0, 70);
-		while (!((angler.get_position() < 5) && (angler.get_position() > -5))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
-	  }
+	//Code to rotate ccw 90º
 
-		for(int i = 0; i < 4; i++)
-		{
-		  left_wheels_1.move_absolute(350, 100);
-		  left_wheels_2.move_absolute(350, 100);
-		  right_wheels_1.move_absolute(350, 100);
-		  right_wheels_2.move_absolute(350, 100);
-		  while (!((left_wheels_1.get_position() < 355) && (left_wheels_1.get_position() > 345))) {
-		   // Continue running this loop as long as the motor is not within +-5 units of its goal
-		   pros::delay(20);
-		  }
+	left_wheels_1.tare_position();
+	left_wheels_2.tare_position();
+	right_wheels_1.tare_position();
+	right_wheels_2.tare_position();
 
-		  left_wheels_1.move(0);
-		  left_wheels_2.move(0);
-		  right_wheels_1.move(0);
-		  right_wheels_2.move(0);
+	lcd::set_text(4, "Fuck!");
 
-		  intake_left.move(100);
-		  intake_right.move(100);
-			pros::delay(200);
-		}
+	left_wheels_1.move_absolute(-160, 60);
+	left_wheels_2.move_absolute(-160, 60);
+	right_wheels_1.move_absolute(140, 60);
+	right_wheels_2.move_absolute(140, 60);
+	while (!((left_wheels_1.get_position() < -155) && (left_wheels_1.get_position() > -165))) {
+	 delay(20);
+	}
+	while (!((left_wheels_2.get_position() < -155) && (left_wheels_2.get_position() > -165))) {
+	 delay(20);
+	}
+	while (!((right_wheels_1.get_position() < 145) && (right_wheels_1.get_position() > 135))) {
+	 delay(20);
+	}
+	while (!((right_wheels_2.get_position() < 145) && (right_wheels_2.get_position() > 135))) {
+	 delay(20);
+	}
 
-		//
-	  // //sets current positions to zero
-	  // left_wheels_1_2.tare_position();
-	  // left_wheels_2_2.tare_position();
-	  // right_wheels_1_2.tare_position();
-	  // right_wheels_2_2.tare_position();
-		//
-	  // //Code to rotate ccw 90º
-	  // left_wheels_1_2.move_absolute(0.5, -100);
-	  // left_wheels_2_2.move_absolute(0.5, -100);
-	  // right_wheels_1_2.move_absolute(0.5, 100);
-	  // right_wheels_2_2.move_absolute(0.5, 100);
-		// while (!((left_wheels_1_2.get_position() < 0.55) && (left_wheels_1_2.get_position() > 0.45))) {
-	  //  // Continue running this loop as long as the motor is not within +-5 units of its goal
-	  //  pros::delay(2);
-	  // }
-		//
-	  // left_wheels_1_2.tare_position();
-	  // left_wheels_2_2.tare_position();
-	  // right_wheels_1_2.tare_position();
-	  // right_wheels_2_2.tare_position();
-		//
-	  // left_wheels_1_2.move_absolute(1.7, 100);
-	  // left_wheels_2_2.move_absolute(1.7, 100);
-	  // right_wheels_1_2.move_absolute(1.7, 100);
-	  // right_wheels_2_2.move_absolute(1.7, 100);
-		//
-	  // while (!((left_wheels_1_2.get_position() < 1.75) && (left_wheels_1_2.get_position() > 1.65))) {
-	  //  // Continue running this loop as long as the motor is not within +-5 units of its goal
-	  //  pros::delay(2);
-	  // }
-		//
-	  // left_wheels_1_2.move(0);
-	  // left_wheels_2_2.move(0);
-	  // right_wheels_1_2.move(0);
-	  // right_wheels_2_2.move(0);
-		//
-	  // //sets current positions to zero
-	  // left_wheels_1_2.tare_position();
-	  // left_wheels_2_2.tare_position();
-	  // right_wheels_1_2.tare_position();
-	  // right_wheels_2_2.tare_position();
-		//
-	  // //Code to rotate ccw 90º
-	  // left_wheels_1_2.move_absolute(0.5, -100);
-	  // left_wheels_2_2.move_absolute(0.5, -100);
-	  // right_wheels_1_2.move_absolute(0.5, 100);
-	  // right_wheels_2_2.move_absolute(0.5, 100);
-		// while (!((left_wheels_1_2.get_position() < 0.55) && (left_wheels_1_2.get_position() > 0.45))) {
-	  //  // Continue running this loop as long as the motor is not within +-5 units of its goal
-	  //  pros::delay(2);
-	  // }
-		//
-	  // left_wheels_1_2.move_absolute(2.3, 100);
-	  // left_wheels_2_2.move_absolute(2.3, 100);
-	  // right_wheels_1_2.move_absolute(2.3, 100);
-	  // right_wheels_2_2.move_absolute(2.3, 100);
-		//
-	  // while (!((left_wheels_1_2.get_position() < 2.35) && (left_wheels_1_2.get_position() > 2.25))) {
-	  //  // Continue running this loop as long as the motor is not within +-5 units of its goal
-	  //  pros::delay(2);
-	  // }
-		//
-	  // left_wheels_1_2.move(0);
-	  // left_wheels_2_2.move(0);
-	  // right_wheels_1_2.move(0);
-	  // right_wheels_2_2.move(0);
-		//
+	left_wheels_1.move(0);
+	left_wheels_2.move(0);
+	right_wheels_1.move(0);
+	right_wheels_2.move(0);
+	intake_left.move(0);
+	intake_right.move(0);
+	delay(50);
+
+	left_wheels_1.tare_position();
+	left_wheels_2.tare_position();
+	right_wheels_1.tare_position();
+	right_wheels_2.tare_position();
+
+left_wheels_1.move_absolute(-250, 50);
+left_wheels_2.move_absolute(-250, 50);
+right_wheels_1.move_absolute(-250, 50);
+right_wheels_2.move_absolute(-250, 50);
+
+while (!((left_wheels_1.get_position() < -245) && (left_wheels_1.get_position() > -255))) {
+ delay(20);
+}
+while (!((left_wheels_2.get_position() < -245) && (left_wheels_2.get_position() > -255))) {
+delay(20);
+}
+while (!((right_wheels_1.get_position() < -245) && (right_wheels_1.get_position() > -255))) {
+delay(20);
+}
+while (!((right_wheels_2.get_position() < -245) && (right_wheels_2.get_position() > -255))) {
+delay(20);
+}
+
+left_wheels_1.move(0);
+left_wheels_2.move(0);
+right_wheels_1.move(0);
+right_wheels_2.move(0);
+
 	  //Code to place the cubes in the goal zone
 		angler.tare_position();
-	  angler.move_absolute(-400, -100);
-	  while (!((angler.get_position() < -395) && (angler.get_position() > -405))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
+	  angler.move_absolute(300, 100);
+	  while (!((angler.get_position() < 305) && (angler.get_position() > 295))) {
+	   delay(20);
 	  }
 
-	  angler.tare_position();
-	  angler.move_absolute(-500, -75);
-	  while (!((angler.get_position() < -495) && (angler.get_position() > -505))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
+	  angler.move_absolute(450, 75);
+	  while (!((angler.get_position() < 455) && (angler.get_position() > 445))) {
+	   delay(20);
 	  }
 
-	  angler.tare_position();
-	  angler.move_absolute(-600, -50);
-	  while (!((angler.get_position() < -595) && (angler.get_position() > -605))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
+	  angler.move_absolute(550, 50);
+	  while (!((angler.get_position() < 555) && (angler.get_position() > 545))) {
+	   delay(20);
 	  }
 
 	  angler.move(0);
 
-	  left_wheels_1.tare_position();
-	  left_wheels_2.tare_position();
-	  right_wheels_1.tare_position();
-	  right_wheels_2.tare_position();
-
-	  //moves forward to make sure tht the the stack is stable
-	  left_wheels_1.move_absolute(20, 20);
-	  left_wheels_2.move_absolute(20, 20);
-	  right_wheels_1.move_absolute(20, 20);
-	  right_wheels_2.move_absolute(20, 20);
-	  while (!((left_wheels_1.get_position() < 35) && (left_wheels_1.get_position() > 25))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
-	  }
-
-	  left_wheels_1.move(0);
-	  left_wheels_2.move(0);
-	  right_wheels_1.move(0);
-	  right_wheels_2.move(0);
-
-	  left_wheels_1.tare_position();
-	  left_wheels_2.tare_position();
-	  right_wheels_1.tare_position();
-	  right_wheels_2.tare_position();
+		left_wheels_1.tare_position();
+		left_wheels_2.tare_position();
+		right_wheels_1.tare_position();
+		right_wheels_2.tare_position();
 
 	  //backs away
-	  left_wheels_1.move_absolute(-200, -20);
-	  left_wheels_2.move_absolute(-200, -20);
-	  right_wheels_1.move_absolute(-200, -20);
-	  right_wheels_2.move_absolute(-200, -20);
-	  while (!((left_wheels_1.get_position() < -195) && (left_wheels_1.get_position() > -205))) {
-	   // Continue running this loop as long as the motor is not within +-5 units of its goal
-	   pros::delay(20);
-	  }
+	  left_wheels_1.move_absolute(400, 80);
+	  left_wheels_2.move_absolute(400, 80);
+	  right_wheels_1.move_absolute(400, 80);
+	  right_wheels_2.move_absolute(400, 80);
+	   delay(50);
+
+		 while (!((left_wheels_1.get_position() < 405) && (left_wheels_1.get_position() > 395))) {
+			delay(20);
+		 }
+		 while (!((left_wheels_2.get_position() < 405) && (left_wheels_2.get_position() > 395))) {
+		 delay(20);
+		}
+		while (!((right_wheels_1.get_position() < 405) && (right_wheels_1.get_position() > 395))) {
+		 delay(20);
+		}
+		while (!((right_wheels_2.get_position() < 405) && (right_wheels_2.get_position() > 395))) {
+		 delay(20);
+		}
 
 	  left_wheels_1.move(0);
 	  left_wheels_2.move(0);
 	  right_wheels_1.move(0);
 	  right_wheels_2.move(0);
+
+		//...turn
+		//...move to tower
+		//...cube and tower (one motion)
+
+		//...turn
+		//...move to tower
+		//...cube and tower (one motion)
+		//27 points!
+
+}
+
+void autonomous() {
+
+movement();
+
 }
