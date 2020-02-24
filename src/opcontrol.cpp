@@ -44,6 +44,7 @@ void drive(void*) {
 void intake(void*) {
 
 	int intake_power = 127;
+	int outtake_power = 85;
 	//moves intakes
 	while(true) {
 		std::string il = std::to_string(intake_left.get_position());
@@ -52,8 +53,8 @@ void intake(void*) {
 		lcd::set_text(5, ir);
 
 		if(master.get_digital(DIGITAL_L2)) {
-			intake_left.move(intake_power);
-			intake_right.move(intake_power);
+			intake_left.move(outtake_power);
+			intake_right.move(outtake_power);
 		}
 		else if(master.get_digital(DIGITAL_R2)) {
 			intake_left.move(-intake_power);
@@ -101,8 +102,8 @@ void anglerMove(void*){
 		   delay(20);
 		  }
 
-		  angler.move_absolute(550, 40);
-		  while (!((angler.get_position() < 555) && (angler.get_position() > 545))) {
+		  angler.move_absolute(600, 30);
+		  while (!((angler.get_position() < 605) && (angler.get_position() > 595))) {
 		   delay(20);
 		  }
 		}

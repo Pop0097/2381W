@@ -23,8 +23,8 @@
 
 #define MOTOR5 13 //Angler
 #define MOTOR6 4 //Arm
-#define MOTOR7 5 //LIntake
-#define MOTOR8 20 //RIntake
+#define MOTOR7 7 //LIntake
+#define MOTOR8 19 //RIntake
 
 #define ULTRA1_PING 1 //LUltrasonic
 #define ULTRA1_ECHO 2
