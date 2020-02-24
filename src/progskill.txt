@@ -1,0 +1,399 @@
+	left_wheels_1.tare_position();
+					  left_wheels_2.tare_position();
+					  right_wheels_1.tare_position();
+					  right_wheels_2.tare_position();
+
+				  intake_left.move(-100);
+				  intake_right.move(-100);
+					delay(100);
+
+				  left_wheels_1.move_absolute(-3070, 75);
+				  left_wheels_2.move_absolute(-3070, 75);
+				  right_wheels_1.move_absolute(-3070, 75);
+				  right_wheels_2.move_absolute(-3070, 75);
+
+				  while (!((left_wheels_1.get_position() < -3065) && (left_wheels_1.get_position() > -3075))) {
+				   delay(20);
+				  }
+					while (!((left_wheels_2.get_position() < -3065) && (left_wheels_2.get_position() > -3075))) {
+					delay(20);
+				 }
+				 while (!((right_wheels_1.get_position() < -3065) && (right_wheels_1.get_position() > -3075))) {
+					delay(20);
+				 }
+				 while (!((right_wheels_2.get_position() < -3065) && (right_wheels_2.get_position() > -3075))) {
+					delay(20);
+				 }
+
+				  left_wheels_1.move(0);
+				  left_wheels_2.move(0);
+				  right_wheels_1.move(0);
+				  right_wheels_2.move(0);
+					delay(100);
+					std::string d1 = std::to_string(left_wheels_1.get_position());
+					lcd::set_text(0, d1);
+					std::string d2 = std::to_string(right_wheels_1.get_position());
+					lcd::set_text(1, d2);
+					std::string d3 = std::to_string(left_wheels_2.get_position());
+					lcd::set_text(2, d3);
+					std::string d4 = std::to_string(right_wheels_2.get_position());
+					lcd::set_text(3, d4);
+
+				//Code to rotate ccw 90º
+
+				left_wheels_1.tare_position();
+				left_wheels_2.tare_position();
+				right_wheels_1.tare_position();
+				right_wheels_2.tare_position();
+
+				lcd::set_text(4, "Fuck!");
+
+				left_wheels_1.move_absolute(-110, 60);
+				left_wheels_2.move_absolute(-110, 60);
+				right_wheels_1.move_absolute(90, 60);
+				right_wheels_2.move_absolute(90, 60);
+				while (!((left_wheels_1.get_position() < -105) && (left_wheels_1.get_position() > -115))) {
+				 delay(20);
+				}
+				while (!((left_wheels_2.get_position() < -105) && (left_wheels_2.get_position() >  -115))) {
+				 delay(20);
+				}
+				while (!((right_wheels_1.get_position() < 95) && (right_wheels_1.get_position() > 85))) {
+				 delay(20);
+				}
+				while (!((right_wheels_2.get_position() < 95) && (right_wheels_2.get_position() > 85))) {
+				 delay(20);
+				}
+
+				left_wheels_1.move(0);
+				left_wheels_2.move(0);
+				right_wheels_1.move(0);
+				right_wheels_2.move(0);
+				delay(100);
+
+				left_wheels_1.tare_position();
+				left_wheels_2.tare_position();
+				right_wheels_1.tare_position();
+				right_wheels_2.tare_position();
+
+			left_wheels_1.move_absolute(-425, 50);
+			left_wheels_2.move_absolute(-425, 50);
+			right_wheels_1.move_absolute(-425, 50);
+			right_wheels_2.move_absolute(-425, 50);
+
+			while (!((left_wheels_1.get_position() < -420) && (left_wheels_1.get_position() > -430))) {
+			 delay(50);
+			}
+			while (!((left_wheels_2.get_position() < -420) && (left_wheels_2.get_position() > -430))) {
+			delay(50);
+			}
+			while (!((right_wheels_1.get_position() < -420) && (right_wheels_1.get_position() > -430))) {
+			delay(50);
+			}
+			while (!((right_wheels_2.get_position() < -420) && (right_wheels_2.get_position() > -430))) {
+			delay(50);
+			}
+
+			left_wheels_1.move(0);
+			left_wheels_2.move(0);
+			right_wheels_1.move(0);
+			right_wheels_2.move(0);
+			intake_left.move(0);
+			intake_right.move(0);
+			delay(100);
+
+			intake_left.move(25);
+			intake_right.move(25);
+			delay(500);
+
+			intake_left.move(0);
+			intake_right.move(0);
+			delay(50);
+
+				  //Code to place the cubes in the goal zone
+					angler.tare_position();
+				  angler.move_absolute(300, 100);
+				  while (!((angler.get_position() < 305) && (angler.get_position() > 295))) {
+				   delay(20);
+				  }
+
+				  angler.move_absolute(450, 60);
+				  while (!((angler.get_position() < 455) && (angler.get_position() > 445))) {
+				   delay(20);
+				  }
+
+				  angler.move_absolute(570, 40);
+				  while (!((angler.get_position() < 575) && (angler.get_position() > 565))) {
+				   delay(20);
+				  }
+
+				  angler.move(0);
+
+					left_wheels_1.tare_position();
+					left_wheels_2.tare_position();
+					right_wheels_1.tare_position();
+					right_wheels_2.tare_position();
+
+					//pushes!
+					left_wheels_1.move_absolute(-75, 25);
+					left_wheels_2.move_absolute(-75, 25);
+					right_wheels_1.move_absolute(-75, 25);
+					right_wheels_2.move_absolute(-75, 25);
+
+					delay(1000);
+
+					//  while (!((left_wheels_1.get_position() < -70) && (left_wheels_1.get_position() > -80))) {
+					// 	delay(20);
+					//  }
+					//  while (!((left_wheels_2.get_position() < -70) && (left_wheels_2.get_position() > -80))) {
+					//  delay(20);
+					// }
+					// while (!((right_wheels_1.get_position() < -70) && (right_wheels_1.get_position() > -80))) {
+					//  delay(20);
+					// }
+					// while (!((right_wheels_2.get_position() < -70) && (right_wheels_2.get_position() > -80))) {
+					//  delay(20);
+					// }
+
+					left_wheels_1.move(0);
+					left_wheels_2.move(0);
+					right_wheels_1.move(0);
+					right_wheels_2.move(0);
+					delay(1000);
+
+					left_wheels_1.tare_position();
+					left_wheels_2.tare_position();
+					right_wheels_1.tare_position();
+					right_wheels_2.tare_position();
+
+				  //backs away
+				  left_wheels_1.move_absolute(400, 60);
+				  left_wheels_2.move_absolute(400, 60);
+				  right_wheels_1.move_absolute(400, 60);
+				  right_wheels_2.move_absolute(400, 60);
+				   delay(50);
+
+					 while (!((left_wheels_1.get_position() < 405) && (left_wheels_1.get_position() > 395))) {
+						delay(20);
+					 }
+					 while (!((left_wheels_2.get_position() < 405) && (left_wheels_2.get_position() > 395))) {
+					 delay(20);
+					}
+					while (!((right_wheels_1.get_position() < 405) && (right_wheels_1.get_position() > 395))) {
+					 delay(20);
+					}
+					while (!((right_wheels_2.get_position() < 405) && (right_wheels_2.get_position() > 395))) {
+					 delay(20);
+					}
+
+				  left_wheels_1.move(0);
+				  left_wheels_2.move(0);
+				  right_wheels_1.move(0);
+				  right_wheels_2.move(0);
+
+					//turn...
+
+					left_wheels_1.tare_position();
+					left_wheels_2.tare_position();
+					right_wheels_1.tare_position();
+					right_wheels_2.tare_position();
+
+					left_wheels_1.move_absolute(450, 60);
+					left_wheels_2.move_absolute(450, 60);
+					right_wheels_1.move_absolute(-300, 60);
+					right_wheels_2.move_absolute(-300, 60);
+
+					while (!((left_wheels_1.get_position() < 455) && (left_wheels_1.get_position() > 445))) {
+					 delay(20);
+					}
+					while (!((left_wheels_2.get_position() < 455) && (left_wheels_2.get_position() >  445))) {
+					 delay(20);
+					}
+					while (!((right_wheels_1.get_position() < -295) && (right_wheels_1.get_position() > -305))) {
+					 delay(20);
+					}
+					while (!((right_wheels_2.get_position() < -295) && (right_wheels_2.get_position() > -305))) {
+					 delay(20);
+					}
+
+					left_wheels_1.move(0);
+					left_wheels_2.move(0);
+					right_wheels_1.move(0);
+					right_wheels_2.move(0);
+					delay(100);
+
+					//...move to tower
+
+					left_wheels_1.tare_position();
+					left_wheels_2.tare_position();
+					right_wheels_1.tare_position();
+					right_wheels_2.tare_position();
+
+				intake_left.move(-70);
+				intake_right.move(-70);
+				delay(100);
+
+				left_wheels_1.move_absolute(-1200, 75);
+				left_wheels_2.move_absolute(-1200, 75);
+				right_wheels_1.move_absolute(-1200, 75);
+				right_wheels_2.move_absolute(-1200, 75);
+
+				while (!((left_wheels_1.get_position() < -1195) && (left_wheels_1.get_position() > -1205))) {
+				 delay(20);
+				}
+				while (!((left_wheels_2.get_position() < -1195) && (left_wheels_2.get_position() > -1205))) {
+				delay(20);
+			 }
+			 while (!((right_wheels_1.get_position() < -1195) && (right_wheels_1.get_position() > -1205))) {
+				delay(20);
+			 }
+			 while (!((right_wheels_2.get_position() < -1195) && (right_wheels_2.get_position() > -1205))) {
+				delay(20);
+			 }
+
+				left_wheels_1.move(0);
+				left_wheels_2.move(0);
+				right_wheels_1.move(0);
+				right_wheels_2.move(0);
+				intake_left.move(0);
+				intake_right.move(0);
+				delay(100);
+
+				left_wheels_1.move_absolute(-1100, 60);
+				left_wheels_2.move_absolute(-1100, 60);
+				right_wheels_1.move_absolute(-1100, 60);
+				right_wheels_2.move_absolute(-1100, 60);
+				delay(1000);
+
+					//...cube and tower (one motion)
+
+						angler.move_absolute(0, 80);
+						while (!((angler.get_position() < 10) && (angler.get_position() > -10))) {
+							delay(20);
+						}
+
+					angler.tare_position();
+					arm.tare_position();
+
+					angler.move_absolute(350, 80);
+					arm.move_absolute(440, 80);
+					while (!((angler.get_position() < 355) && (angler.get_position() > 345))) {
+						delay(20);
+					}
+					while (!((arm.get_position() < 445) && (arm.get_position() > 435))) {
+						delay(20);
+					}
+
+					left_wheels_1.move_absolute(-1200, 60);
+					left_wheels_2.move_absolute(-1200, 60);
+					right_wheels_1.move_absolute(-1200, 60);
+					right_wheels_2.move_absolute(-1200, 60);
+					delay(1000);
+
+					intake_left.move(75);
+					intake_right.move(75);
+					delay(1000);
+
+					intake_left.move(0);
+					intake_right.move(0);
+
+					//...turn
+
+					left_wheels_1.tare_position();
+					left_wheels_2.tare_position();
+					right_wheels_1.tare_position();
+					right_wheels_2.tare_position();
+
+				left_wheels_1.move_absolute(1000, 75);
+				left_wheels_2.move_absolute(1000, 75);
+				right_wheels_1.move_absolute(1000, 75);
+				right_wheels_2.move_absolute(1000, 75);
+
+				while (!((left_wheels_1.get_position() < 1005) && (left_wheels_1.get_position() > 995))) {
+				 delay(20);
+				}
+				while (!((left_wheels_2.get_position() < 1005) && (left_wheels_2.get_position() > 995))) {
+				delay(20);
+			 }
+			 while (!((right_wheels_1.get_position() < 1005) && (right_wheels_1.get_position() > 995))) {
+				delay(20);
+			 }
+			 while (!((right_wheels_2.get_position() < 1005) && (right_wheels_2.get_position() > 995))) {
+				delay(20);
+			 }
+
+				left_wheels_1.move(0);
+				left_wheels_2.move(0);
+				right_wheels_1.move(0);
+				right_wheels_2.move(0);
+				delay(100);
+
+				left_wheels_1.tare_position();
+				left_wheels_2.tare_position();
+				right_wheels_1.tare_position();
+				right_wheels_2.tare_position();
+
+				left_wheels_1.move_absolute(200, 60);
+				left_wheels_2.move_absolute(200, 60);
+				right_wheels_1.move_absolute(-225, 60);
+				right_wheels_2.move_absolute(-225, 60);
+
+				while (!((left_wheels_1.get_position() < 205) && (left_wheels_1.get_position() > 195))) {
+				 delay(20);
+				}
+				while (!((left_wheels_2.get_position() < 205) && (left_wheels_2.get_position() >  195))) {
+				 delay(20);
+				}
+				while (!((right_wheels_1.get_position() < -220) && (right_wheels_1.get_position() > -230))) {
+				 delay(20);
+				}
+				while (!((right_wheels_2.get_position() < -220) && (right_wheels_2.get_position() > -230))) {
+				 delay(20);
+				}
+
+				left_wheels_1.move(0);
+				left_wheels_2.move(0);
+				right_wheels_1.move(0);
+				right_wheels_2.move(0);
+				delay(100);
+
+					//...move to tower
+
+
+								left_wheels_1.tare_position();
+								left_wheels_2.tare_position();
+								right_wheels_1.tare_position();
+								right_wheels_2.tare_position();
+
+							intake_left.move(-100);
+							intake_right.move(-100);
+							delay(100);
+
+							left_wheels_1.move_absolute(-1000, 75);
+							left_wheels_2.move_absolute(-1000, 75);
+							right_wheels_1.move_absolute(-1000, 75);
+							right_wheels_2.move_absolute(-1000, 75);
+
+							while (!((left_wheels_1.get_position() < -995) && (left_wheels_1.get_position() > -1005))) {
+							 delay(20);
+							}
+							while (!((left_wheels_2.get_position() < -995) && (left_wheels_2.get_position() > -1005))) {
+							delay(20);
+						 }
+						 while (!((right_wheels_1.get_position() < -995) && (right_wheels_1.get_position() > -1005))) {
+							delay(20);
+						 }
+						 while (!((right_wheels_2.get_position() < -995) && (right_wheels_2.get_position() > -1005))) {
+							delay(20);
+						 }
+
+							left_wheels_1.move(0);
+							left_wheels_2.move(0);
+							right_wheels_1.move(0);
+							right_wheels_2.move(0);
+							intake_left.move(0);
+							intake_right.move(0);
+							delay(100);
+
+					//...cube and tower (one motion)
+					//27 points!
