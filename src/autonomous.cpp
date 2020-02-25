@@ -1,25 +1,88 @@
-/*
-  Wheel diameter is 4" meaning eery ratation will move the robot 12.57".
+#include "main.h"
+#include <math.h>
+#include "motors.h"
+#include "adi.h"
+#include "pid.h"
 
-  PATHS MADE FOR BLUE ZONE
+using namespace pros;
 
-  Path 1: (Another one is required if we are on the red team. In this case, instead of turning ccw, we will turn cw)
-    Distance to first set of cubes: 12.65"
-    Running distance (collecting cubes): 22"
-    Turn 90º ccw
-    Moving distance to wall: 21"
-    Turn 90º ccw
-    Distance to the goal zone: 28.8"
-    Place cubes down :)
+PID pid2 = PID(0.1, 75, -75, 0.1, 0.01, 0.5);//constructs PID object
+// void ultrasonic(void*) {
 
-  Path 2:(Another one is required if we are on the red team. In this case, instead of turning cw, we will turn ccw)
-    Diastance from first cube:  5.65"
-    Running distance (collecting cubes): 5.5"
-    Distance to second cube:  18"
-    Running distance (collecting cubes): 5.5"
-    Turn 90º cw
-    Distance to wall: 24.4"
-    Turn 90º cw
-    Distance to goal zone: 23.3"
-    Place cubes down :)
-*/
+// 	while (true) {
+// 		while (ultra_left.get_value() > 100 && ultra_right.get_value() > 100) {
+//     // Move forward until the robot is 100 cm from a solid object
+// 		angler.move(127);
+//     pros::delay(50);
+//   }
+// }
+//
+// }
+
+void movement() {
+
+	left_wheels_1.tare_position();
+	left_wheels_2.tare_position();
+	right_wheels_1.tare_position();
+	right_wheels_2.tare_position();
+
+	left_wheels_1.move_absolute(400, 80);
+	left_wheels_2.move_absolute(400, 80);
+	right_wheels_1.move_absolute(400, 80);
+	right_wheels_2.move_absolute(400, 80);
+
+	while (!((left_wheels_1.get_position() < 405) && (left_wheels_1.get_position() > 395))) {
+	 	delay(20);
+	}
+	while (!((left_wheels_2.get_position() < 405) && (left_wheels_2.get_position() > 395))) {
+		delay(20);
+ 	}
+	while (!((right_wheels_1.get_position() < 405) && (right_wheels_1.get_position() > 395))) {
+		delay(20);
+	}
+	while (!((right_wheels_2.get_position() < 405) && (right_wheels_2.get_position() > 395))) {
+		delay(20);
+	}
+
+	left_wheels_1.move(0);
+	left_wheels_2.move(0);
+	right_wheels_1.move(0);
+	right_wheels_2.move(0);
+	delay(1000);
+
+	left_wheels_1.tare_position();
+	left_wheels_2.tare_position();
+	right_wheels_1.tare_position();
+	right_wheels_2.tare_position();
+
+	left_wheels_1.move_absolute(-400, 80);
+	left_wheels_2.move_absolute(-400, 80);
+	right_wheels_1.move_absolute(-400, 80);
+	right_wheels_2.move_absolute(-400, 80);
+
+	while (!((left_wheels_1.get_position() < -395) && (left_wheels_1.get_position() > -405))) {
+		delay(20);
+	}
+	while (!((left_wheels_2.get_position() < -395) && (left_wheels_2.get_position() > -405))) {
+		delay(20);
+ 	}
+ 	while (!((right_wheels_1.get_position() < -395) && (right_wheels_1.get_position() > -405))) {
+		delay(20);
+ 	}
+ 	while (!((right_wheels_2.get_position() < -395) && (right_wheels_2.get_position() > -405))) {
+		delay(20);
+ 	}
+
+	left_wheels_1.move(0);
+	left_wheels_2.move(0);
+	right_wheels_1.move(0);
+	right_wheels_2.move(0);
+	delay(1000);
+
+}
+
+void autonomous() {
+
+	movement();
+
+}

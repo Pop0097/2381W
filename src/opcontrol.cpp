@@ -1,70 +1,69 @@
 #include "main.h"
 #include "pid.h"
+#include "motors.h"
+#include "adi.h"
 
-//defines the ports for each motor
-#define MOTOR1 14 //L1
-#define MOTOR2 17 //L2
-#define MOTOR3 11 //R1
-#define MOTOR4 2 //R2
+using namespace pros;
 
-#define MOTOR5 13 //Angler
-#define MOTOR6 4 //Arm
-#define MOTOR7 5 //LIntake9
-#define MOTOR8 18 //RIntake
+PID pid = PID(0.1, 75, -75, 0.1, 0.01, 0.5);//constructs PID object
+Mutex mutex;
 
-PID pid = PID(0.1, 75, -75, 10, 1, 0.5);//constructs PID object
-//PID pid_auton = PID(0.1, 75, -75, 10, 1, 0.5);
 //defines controller
-pros::Controller master (CONTROLLER_MASTER);
-pros::Mutex mutex;
+Controller master (CONTROLLER_MASTER);
 
 //defines the ports that are associated with each wheel
-pros::Motor left_wheels_1 (MOTOR1, 1); //L1
-pros::Motor right_wheels_1 (MOTOR3, 0); //R1
-pros::Motor left_wheels_2 (MOTOR2, 1); //L2
-pros::Motor right_wheels_2 (MOTOR4, 0); //R2
-
-pros::Motor intake_left (MOTOR7, 1);
-pros::Motor intake_right (MOTOR8, 0);
-pros::Motor arm (MOTOR6, 1);
-pros::Motor angler (MOTOR5, 0);
 
 void drive(void*) {
 
-//loop reads the joystick controlls and powers the motors accordingly
+	//loop reads the joystick controlls and powers the motors accordingly
 	while (true) {
+		std::string d1 = std::to_string(left_wheels_1.get_position());
+		lcd::set_text(0, d1);
+		std::string d2 = std::to_string(right_wheels_1.get_position());
+		lcd::set_text(1, d2);
+		std::string d3 = std::to_string(left_wheels_2.get_position());
+		lcd::set_text(2, d3);
+		std::string d4 = std::to_string(right_wheels_2.get_position());
+		lcd::set_text(3, d4);
+
 		int power = master.get_analog(ANALOG_LEFT_Y);
 		int turn = 0;
-		if(!(master.get_digital(DIGITAL_UP))){
+		if(!(master.get_digital(DIGITAL_RIGHT))){
 			turn = master.get_analog(ANALOG_RIGHT_X);
 		}
 		int left = power + turn;
 		int right = power - turn;
-		left_wheels_1.move(left);
-		left_wheels_2.move(left);
-		right_wheels_1.move(right);
-		right_wheels_2.move(right);
+		left_wheels_1.move(-left);
+		left_wheels_2.move(-left);
+		right_wheels_1.move(-right);
+		right_wheels_2.move(-right);
 		pros::delay(20);
 	}
 }
 
 void intake(void*) {
 
-	int intake_power = 100;
+	int intake_power = 127;
+	int outtake_power = 85;
 	//moves intakes
 	while(true) {
+		std::string il = std::to_string(intake_left.get_position());
+		lcd::set_text(4, il);
+		std::string ir = std::to_string(intake_right.get_position());
+		lcd::set_text(5, ir);
+
 		if(master.get_digital(DIGITAL_L2)) {
-			intake_left.move(intake_power);
-			intake_right.move(intake_power);
+			intake_left.move(outtake_power);
+			intake_right.move(outtake_power);
 		}
 		else if(master.get_digital(DIGITAL_R2)) {
 			intake_left.move(-intake_power);
 			intake_right.move(-intake_power);
 		}
-		else if(master.get_digital(DIGITAL_DOWN)) {
+		else if(master.get_digital(DIGITAL_X)) {
 			intake_left.move(intake_power/3);
 			intake_right.move(intake_power/3);
-			while (!master.get_digital(DIGITAL_DOWN)) {
+			while (!master.get_digital(DIGITAL_X)) {
 			   pros::delay(20);
 			}
 		}
@@ -79,43 +78,57 @@ void intake(void*) {
 	}
 }
 
-void anglerMove(void*) {
+void anglerMove(void*){
 	int angler_power = 0;
 	while(true){
+		std::string a = std::to_string(angler.get_position());
+		lcd::set_text(7, a);
 		if(master.get_digital(DIGITAL_L1)){
-			angler.move(100);
+			angler.move(127);
 		}
 		else if(master.get_digital(DIGITAL_R1)){
-			angler.move(-100);
+			angler.move(-127);
 		}
-		else if(master.get_digital(DIGITAL_UP)){ //overrides so you can use the right joystick for angler
-			pros::lcd::clear_line(1);
-			pros::lcd::set_text(1, "Angler Given Control");
-			while(master.get_digital(DIGITAL_UP)){
-				angler_power = master.get_analog(ANALOG_RIGHT_Y);
-				angler.move(angler_power);
-				pros::delay(20);
-			}
-			pros::lcd::clear_line(1);
+		else if(master.get_digital(DIGITAL_RIGHT)){ //overrides so you can use the right joystick for angler
+			//Code to place the cubes in the goal zone
+			angler.tare_position();
+		  angler.move_absolute(300, 100);
+		  while (!((angler.get_position() < 305) && (angler.get_position() > 295))) {
+		   delay(20);
+		  }
+
+		  angler.move_absolute(450, 60);
+		  while (!((angler.get_position() < 455) && (angler.get_position() > 445))) {
+		   delay(20);
+		  }
+
+		  angler.move_absolute(600, 30);
+		  while (!((angler.get_position() < 605) && (angler.get_position() > 595))) {
+		   delay(20);
+		  }
 		}
 		else{
 			angler.move(0);
 			angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			angler.move(0);
 		}
+
 		pros::delay(20);
 	}
 }
 
 void arms(void*) {
 
-	int arm_power = 100;
+	int arm_power = 127;
 
 	while(true) {
+		std::string b = std::to_string(arm.get_position());
+		lcd::set_text(6, b);
 		//moves arm
-		if(master.get_digital(DIGITAL_X)) {
+		if(master.get_digital(DIGITAL_Y)) {
 			arm.move(arm_power);
 		}
-		else if(master.get_digital(DIGITAL_Y)) {
+		else if(master.get_digital(DIGITAL_B)) {
 			arm.move(-arm_power);
 		}
 		else {
@@ -126,62 +139,9 @@ void arms(void*) {
 	}
 }
 
-void towerScore(void*){ //macros for the towers. Hit R1 or L1 to override
-	while(true){
-		if(master.get_digital(DIGITAL_RIGHT)){ //medium tower
-			pros::lcd::clear_line(1);
-			pros::lcd::set_text(1, "Medium tower");
-			int encoderValue2 = 70;//TEMPORARY VALUE
-			mutex.take(TIMEOUT_MAX);
-			while(!((master.get_digital(DIGITAL_X)) || (master.get_digital(DIGITAL_Y)))){
-				if(arm.get_position() > encoderValue2){
-					arm.move(-50);
-				}
-				else{
-					arm.move(50);
-				}
-				if(!((arm.get_position() < 65) && (arm.get_position() > 75))){ //TEMPORARY VALUES
-					pros::delay(20);
-				}
-				else{
-					arm.move(0);
-					arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-				}
-			}
-			pros::lcd::clear_line(1);
-			mutex.give();
-		}
-		else if(master.get_digital(DIGITAL_LEFT)){ //shortest tower
-			pros::lcd::clear_line(1);
-			pros::lcd::set_text(1, "Shortest tower");
-			int encoderValue3 = 50;
-			mutex.take(TIMEOUT_MAX);//TEMPORARY VALUE
-			while(!((master.get_digital(DIGITAL_X)) || (master.get_digital(DIGITAL_Y)))){
-				if(arm.get_position() > encoderValue3){
-					arm.move(-50);
-				}
-				else{
-					arm.move(50);
-				}
-				if(!((arm.get_position() < 45) && (arm.get_position() > 55))){ //TEMPORARY VALUES
-					pros::delay(20);
-				}
-				else{
-					arm.move(0);
-					arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-				}
-			}
-			pros::lcd::clear_line(1);
-			mutex.give();
-		}
-		pros::delay(20);
-	}
-}
-
 void opcontrol() {
-	pros::Task task1 (drive, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Driving");
-	pros::Task task2 (intake, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Intake");
-	pros::Task task3 (anglerMove, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Angler");
-	pros::Task task4 (arms, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Arms");
-	pros::Task task5 (towerScore, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Tower scoring");
+	Task task1 (drive, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Driving");
+	Task task2 (intake, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Intake");
+	Task task3 (anglerMove, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Angler");
+	Task task4 (arms, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Arms");
 }
